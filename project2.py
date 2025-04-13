@@ -18,6 +18,26 @@ board = [
     [7, 8, 9]
     ]
 
+def check_win(board, symbol):
+    for row in board:
+        if row[0] == symbol and row[1] == symbol and row[2] == symbol:
+            return True
+    for col in range(3):
+        if board[0][col] == symbol and board[1][col] == symbol and board[2][col] == symbol:
+            return True
+    if board[0][0] == symbol and board[1][1] == symbol and board[2][2] == symbol or \
+       board[0][2] == symbol and board[1][1] == symbol and board[2][0] == symbol:
+        return True
+    return False
+
+def is_draw(board):
+    for row in board:
+        for col in row:
+            if isinstance(col, int):
+                return False
+    return True
+
+
 player_turn = True # player goes first (true), (false = computer´s turn)
 
 # game loop that continues until the game ends
@@ -52,6 +72,14 @@ while True:
         print('Please choose a valid number.')
         continue
 
+    if check_win(board, 'O'):
+        print('Player wins!')
+        break
+
+    if is_draw(board):
+        print('It´s a draw!')
+        break
+
 
     # computer´s turn
     while True:
@@ -69,4 +97,15 @@ while True:
                 break  # exit loop once move is made
         if player_turn:
             break  # exit loop once a valid move is made
+
+    if check_win(board, 'X'):
+        print('Computer wins!')
+        break
+
+    if is_draw(board):
+        print('It´s a draw!')
+        break
+
+    display_board(board)
+    
     
